@@ -1,4 +1,6 @@
-1.
+
+mvn package
+mvn assembly:assembly
 
 题目，方案，试卷，分类，标签，考生，考场，
 

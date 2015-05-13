@@ -1,6 +1,7 @@
 package org.flycloud.web.exam3.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -8,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Question {
@@ -17,6 +20,9 @@ public class Question {
 	@ManyToOne
 	private QuestionFolder folder;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createTime = new Date();
+
 	@ManyToOne
 	private QuestionType type;
 
@@ -25,6 +31,14 @@ public class Question {
 
 	@OneToMany
 	private List<Resource> resources = new ArrayList<Resource>();
+	
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
 	public String getId() {
 		return id;
