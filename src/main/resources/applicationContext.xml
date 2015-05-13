@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:web-services="http://www.springframework.org/schema/web-services"
+	xmlns:oxm="http://www.springframework.org/schema/oxm"
+	xsi:schemaLocation="http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd
+		http://www.springframework.org/schema/web-services http://www.springframework.org/schema/web-services/web-services.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<description>spring公共配置</description>
+
+	<context:component-scan base-package="org.flycloud.web.exam3">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+	</context:component-scan>
+
+	<!-- 数据源 -->
+	<context:property-placeholder
+		ignore-unresolvable="true" location="classpath*:/mysql.properties" />
+
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driver}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="user" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="minPoolSize" value="1" />
+		<property name="maxPoolSize" value="10" />
+		<property name="testConnectionOnCheckout" value="false"/>
+		<property name="preferredTestQuery" value="select 1"/>
+	</bean>
+
+	<!-- Jpa Entity Manager 配置 -->
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter" />
+		<property name="packagesToScan">
+			<list>
+				<value>org.flycloud.web.exam3.model</value>
+			</list>
+		</property>
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<!-- <prop key="hibernate.hbm2ddl.auto">create-drop</prop> -->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.current_session_context_class">thread</prop>
+				<!-- 抓取策略 -->
+				<prop key="hibernate.max_fetch_depth">1</prop>
+				<prop key="hibernate.default_batch_fetch_size">4</prop>
+				<prop key="hibernate.jdbc.fetch_size">30</prop>
+				<prop key="hibernate.jdbc.batch_size">50</prop>
+				<!--开发配置 -->
+				<prop key="hibernate.use_sql_comments">false</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.format_sql">false</prop>
+			</props>
+		</property>
+	</bean>
+	<!--hibernatejpa适配器 -->
+	<bean id="hibernateJpaVendorAdapter"
+		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+		<property name="databasePlatform" value="${hibernate.dialect}" />
+	</bean>
+
+	<!--事务管理器 -->
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+	<!-- 使用注解事务 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- Spring Data Jpa配置 , 扫描base-package下所有继承于Repository<T,ID>的接口 -->
+	<jpa:repositories base-package="org.flycloud.web.exam3"
+		transaction-manager-ref="transactionManager"
+		entity-manager-factory-ref="entityManagerFactory" />
+		
+    <bean id="multipartResolver"  
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+        <!-- 设置上传文件的最大尺寸为1MB -->  
+        <property name="maxUploadSize">  
+            <value>1048576</value>  
+        </property>  
+    </bean>
+
+</beans>
