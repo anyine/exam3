@@ -38,11 +38,6 @@ public class PlatformController {
 	}
 
 	@RequestMapping(value = { "/", "/logout" }, method = RequestMethod.GET)
-	public ModelAndView logout() {
-		return new ModelAndView("index");
-	}
-
-	@RequestMapping(value = { "/init" }, method = RequestMethod.GET)
 	public String init() {
 		platformService.init("15169021589");
 		return "index";
