@@ -59,14 +59,13 @@
 <script type="text/javascript" src="App/view/plan/DespEditWindow.js"></script>
 <script type="text/javascript" src="App/view/plan/DespEditForm.js"></script>
 <script type="text/javascript" src="App/view/system/RandomWindow.js"></script>
-<!-- å¯ç ä¿®æ¹ -->
 <script type="text/javascript" src="App/view/password/PasswordPanel.js"></script>
 </head>
 <body>
 	<div
 		style="position: fixed; top: 0; left: 0; bottom: 0; right: 0; z-index: -1;">
-		<!-- img style="height: 100%; width: 100%; border: 0;"
-			src="App/resource/image/background.jpg"></img -->
+		<img style="height: 100%; width: 100%; border: 0;"
+			src="App/resource/image/b.jpg"></img>
 	</div>
 	<iframe id="iframe1" style="display: none;"></iframe>
 	<iframe id="iframe2" style="display: none;"></iframe>

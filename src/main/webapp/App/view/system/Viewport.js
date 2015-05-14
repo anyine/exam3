@@ -10,8 +10,8 @@ App.view.system.Panel = Ext.extend(Ext.Viewport, {
 		var ch = '';
 		this.items = [{
 			region : 'north',
-			height : 150,
-			html : '<img src="App/resource/image/top.jpg" style="height:100%;width:100%"></img>'
+			height : 100,
+			html : '<img src="App/resource/image/t.jpg" style="height:100%;width:100%"></img>'
 		}, {
 			region : 'west',
 			width : 300,
