@@ -1,4 +1,4 @@
-package org.flycloud.web.exam3.view;
+package org.flycloud.web.view;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;

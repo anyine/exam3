@@ -18,7 +18,7 @@ public class ImportController {
 	@Inject
 	private PlatformService platformService;
 
-	@RequestMapping(value = { "/user" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/excel" }, method = RequestMethod.POST)
 	public ModelAndView login(@RequestParam("name") String name,
 			@RequestParam("pass") String pass) {
 		try {
