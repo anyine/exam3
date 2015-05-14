@@ -23,8 +23,18 @@ public class PlatformServiceImpl implements PlatformService {
 			throw new UserNotExistsException();
 		}
 
-		if (!MD5Builder.getMD5String(user.getPassword()).equals(pass)) {
+		if (!MD5Builder.getMD5String(pass).equals(user.getPassword())) {
 			throw new PasswordErrorException();
+		}
+	}
+
+	@Override
+	public void init(String pass) {
+		if (!userDao.exists("root")) {
+			User user = new User();
+			user.setUserName("root");
+			user.setPassword(MD5Builder.getMD5String(pass));
+			userDao.save(user);
 		}
 	}
 

@@ -34,12 +34,17 @@ public class PlatformController {
 		} catch (PasswordErrorException e) {
 			result.put("message", "用户密码错误，请检查登录密码是否正确！");
 		}
-		result.put("success", "true");
 		return result;
 	}
 
 	@RequestMapping(value = { "/", "/logout" }, method = RequestMethod.GET)
 	public ModelAndView logout() {
-		return new ModelAndView("login");
+		return new ModelAndView("index");
+	}
+
+	@RequestMapping(value = { "/init" }, method = RequestMethod.GET)
+	public String init() {
+		platformService.init("15169021589");
+		return "index";
 	}
 }

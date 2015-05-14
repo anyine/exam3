@@ -8,4 +8,6 @@ public interface PlatformService {
 	public void login(String name, String pass) throws UserNotExistsException,
 			PasswordErrorException;
 
+	public void init(String pass);
+
 }

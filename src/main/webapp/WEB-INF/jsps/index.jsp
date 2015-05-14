@@ -5,38 +5,70 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<!-- css样式 -->
+<link rel="stylesheet" type="text/css" href="ext/resources/css/ext-all.css" />
 <link rel="stylesheet" type="text/css"
-	href="js/extjs/resources/css/ext-all.css" />
-<link rel="stylesheet" type="text/css"
-	href="js/app/resources/css/style.css" />
-<link rel="stylesheet" type="text/css"
-	href="js/extjs/resources/css/column-tree.css" />
-<link rel="stylesheet" type="text/css"
-	href="js/app/resources/css/icons.css" />
-<link rel="stylesheet" type="text/css"
-	href="js/extjs/resources/css/date-picker.css" />
+	href="App/resource/style/style.css" />
+<script type="text/javascript" src="ext/adapter/ext/ext-base.js"></script>
+<script type="text/javascript" src="ext/ext-all.js"></script>
+<script type="text/javascript" src="ext/ux/util.js"></script>
+<script type="text/javascript" src="app.js"></script>
 
-<!-- extjs原生js -->
-<script type="text/javascript" src="js/extjs/adapter/ext/ext-base.js"></script>
-<script type="text/javascript" src="js/extjs/ext-all.js"></script>
-<script type="text/javascript" src="js/extjs/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="App/view/system/Viewport.js"></script>
+<script type="text/javascript" src="App/view/system/Login.js"></script>
+<script type="text/javascript" src="App/view/system/MenuTree.js"></script>
+<script type="text/javascript" src="App/view/system/TablePanel.js"></script>
+<script type="text/javascript" src="App/view/plan/PlanPanel.js"></script>
+<script type="text/javascript" src="App/view/plan/WaitWindow.js"></script>
+<script type="text/javascript" src="App/view/qType/QuestionTypePanel.js"></script>
+<script type="text/javascript" src="App/view/question/QuestionPanel.js"></script>
+<script type="text/javascript" src="App/view/type/TypePanel.js"></script>
+<script type="text/javascript" src="App/view/type/EditWindow.js"></script>
+<script type="text/javascript" src="App/view/qType/EditWindow.js"></script>
+<script type="text/javascript" src="App/view/question/EditWindow.js"></script>
+<script type="text/javascript" src="App/view/type/EditWindow.js"></script>
+<script type="text/javascript" src="App/view/type/TypePanelWindow.js"></script>
+<script type="text/javascript" src="App/view/question/ImportFild.js"></script>
+<script type="text/javascript" src="App/view/plan/EditWindow.js"></script>
+<script type="text/javascript" src="App/view/plan/PlanShowPanel.js"></script>
+<script type="text/javascript" src="App/view/plan/PlanShowWindow.js"></script>
+<script type="text/javascript" src="App/view/plan/TypeEditWindow.js"></script>
+<script type="text/javascript" src="App/view/plan/TypeEditPanel.js"></script>
+<script type="text/javascript" src="App/view/plan/TypeEditForm.js"></script>
 <script type="text/javascript"
-	src="js/extjs/other/tree/ColumnTreeCheckNodeUI.js"></script>
-
-<script type="text/javascript" src="js/app/system/app.js"></script>
-<script type="text/javascript" src="js/app/system/login.js"></script>
-<script type="text/javascript" src="js/app/system/import_window.js"></script>
-<script type="text/javascript" src="js/app/system/import_user.js"></script>
-<script type="text/javascript" src="js/app/system/input_standardItem.js"></script>
-
-
-<title>济宁消防精细化系统</title>
+	src="App/view/plantable/PlanTablePanel.js"></script>
+<script type="text/javascript"
+	src="App/view/plantable/EditTablePanel.js"></script>
+<script type="text/javascript"
+	src="App/view/plantable/ClassTypeEditPanel.js"></script>
+<script type="text/javascript"
+	src="App/view/plantable/ClassTypeEditWindow.js"></script>
+<script type="text/javascript"
+	src="App/view/plantable/QuestionTypeEditPanel.js"></script>
+<script type="text/javascript"
+	src="App/view/plantable/QuestionTypeEditWindow.js"></script>
+<script type="text/javascript" src="App/view/plantable/MixEditPanel.js"></script>
+<script type="text/javascript" src="App/view/plantable/MixEditWindow.js"></script>
+<script type="text/javascript" src="App/view/plantable/HardEditPanel.js"></script>
+<script type="text/javascript"
+	src="App/view/plantable/HardEditWindow.js"></script>
+<script type="text/javascript" src="App/view/plantable/EditWindow.js"></script>
+<script type="text/javascript"
+	src="App/view/plantable/PointEditWindow.js"></script>
+<script type="text/javascript"
+	src="App/view/plantable/PointEditPanel.js"></script>
+<script type="text/javascript" src="App/view/plan/DespEditWindow.js"></script>
+<script type="text/javascript" src="App/view/plan/DespEditForm.js"></script>
+<script type="text/javascript" src="App/view/system/RandomWindow.js"></script>
+<!-- å¯ç ä¿®æ¹ -->
+<script type="text/javascript" src="App/view/password/PasswordPanel.js"></script>
 </head>
 <body>
 	<div
 		style="position: fixed; top: 0; left: 0; bottom: 0; right: 0; z-index: -1;">
-				<img style="height: 100%; width: 100%; border: 0;" src="js/app/resources/image/index_bg.png"></img>
+		<!-- img style="height: 100%; width: 100%; border: 0;"
+			src="App/resource/image/background.jpg"></img -->
 	</div>
+	<iframe id="iframe1" style="display: none;"></iframe>
+	<iframe id="iframe2" style="display: none;"></iframe>
 </body>
 </html>

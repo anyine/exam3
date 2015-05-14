@@ -57,7 +57,7 @@ App.view.system.Login = Ext.extend(Ext.Window, {
 												+ (1000 * 60 * 20))
 									});
 							cp.set("loginName", "admin");
-							window.location.href = 'index.html';
+							window.location.href = '/';
 							me.close();
 						} else {
 							Ext.Msg.alert("提示", result.message);
@@ -65,7 +65,7 @@ App.view.system.Login = Ext.extend(Ext.Window, {
 					},
 					failure : function(form, action) {
 						var result = action.result;
-						Ext.Msg.alert("提示", result.message);
+						Ext.Msg.alert("提示", result.message || "服务器连接错误！");
 					}
 				});
 			}
