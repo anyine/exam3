@@ -19,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value = { "/export" })
 public class ExportController {
 
-	
 	@RequestMapping(value = "/pdf/examine/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public ModelAndView examine(@PathVariable String id) {

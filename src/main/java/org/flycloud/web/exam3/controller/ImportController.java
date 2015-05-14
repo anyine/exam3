@@ -20,13 +20,12 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value = { "/import" })
 public class ImportController {
 
-	@Inject
-	private PlatformService platformService;
+//	@Inject
+//	private PlatformService platformService;
 
 	@RequestMapping(value = "/upload")
-	public String upload(
+	public String excel(
 			@RequestParam(value = "file", required = false) MultipartFile file) {
-		System.out.println(file.getOriginalFilename());
 		try {
 			List<List<Object>> list = ReadExcel.readExcel(file, 0, 4);
 			for (List<Object> l : list) {
@@ -40,16 +39,4 @@ public class ImportController {
 		return "result";
 	}
 
-	@RequestMapping(value = { "/excel" }, method = RequestMethod.POST)
-	public ModelAndView login(@RequestParam("name") String name,
-			@RequestParam("pass") String pass) {
-		try {
-			platformService.login(name, pass);
-			return new ModelAndView("index");
-		} catch (UserNotExistsException e) {
-			return new ModelAndView("login");
-		} catch (PasswordErrorException e) {
-			return new ModelAndView("login");
-		}
-	}
 }
