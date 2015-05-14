@@ -18,6 +18,9 @@ public class Question {
 	private String id;
 
 	@ManyToOne
+	private QuestionBank bank;
+
+	@ManyToOne
 	private QuestionFolder folder;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -38,6 +41,14 @@ public class Question {
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	public QuestionBank getBank() {
+		return bank;
+	}
+
+	public void setBank(QuestionBank bank) {
+		this.bank = bank;
 	}
 
 	public String getId() {

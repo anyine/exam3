@@ -42,4 +42,20 @@ public class PlatformController {
 		platformService.init("15169021589");
 		return "index";
 	}
+
+	@RequestMapping(value = { "/tree" }, method = RequestMethod.POST)
+	@ResponseBody
+	public String tree() {
+		return "["+
+            "{ text: '菜单',"+
+            "    children: ["+
+            "    { text: '分类维护',leaf: true,file:'App.view.type.TypePanel'},"+
+            "    { text: '题型维护',leaf: true,file:'App.view.qType.QuestionTypePanel'},"+
+            "    { text: '试题维护',leaf: true,file:'App.view.question.QuestionPanel'},"+
+            "    { text: '方案维护',leaf: true,file:'App.view.plan.PlanPanel'},"+
+            "    { text: '密码修改',leaf: true,file:'App.view.password.PasswordPanel'},"+
+            "    { text: '现场摇号',leaf: true,file:'App.view.system.RandomWindow'}"+
+            "]}"+
+        "]";
+	}
 }

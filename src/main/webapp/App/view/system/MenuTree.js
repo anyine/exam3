@@ -10,7 +10,7 @@ App.view.system.MenuTree = Ext.extend(Ext.tree.TreePanel, {
 					expanded : true
 				});
 		me.loader = new Ext.tree.TreeLoader({
-			dataUrl : 'App/servlet/MenuTreeServlet.jss',
+			dataUrl : '/tree',
 			baseParams : {}
 		});
 		me.root = root;
