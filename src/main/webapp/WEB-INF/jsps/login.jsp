@@ -12,13 +12,16 @@
 	<div class="body_main">
 		<div class="login">
 			<div class="login_infor">
-				<form action="login" method="POST">
+				<form action="/import/upload" method="POST" enctype="multipart/form-data" >
 					<div class="login_in_left fl">
 						<div class="login_user">
 							<input name="name" type="text" placeholder="用户名" />
 						</div>
 						<div class="login_pwd">
 							<input name="pass" type="password" placeholder="密 码" />
+						</div>
+						<div class="login_pwd">
+							<input name="file" type="file" placeholder="文件" />
 						</div>
 						<div class="pwd_wj">
 							<a href="#">忘记密码？</a>
