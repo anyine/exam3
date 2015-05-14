@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @SessionAttributes("user")
-public class UserController {
+public class PlatformController {
 
 	@Inject
 	private PlatformService platformService;
