@@ -1,4 +1,4 @@
-package org.flycloud.util;
+package org.flycloud.web.exam3.test;
 
 import java.io.FileOutputStream;
 
