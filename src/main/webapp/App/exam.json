@@ -1,0 +1,29 @@
+{
+	title : "灭火救援",
+	questionGroups : [ {
+		type : "填空题",
+		remark : "本题共%1个小题，每空%2分，共%3分",
+		count : 20,
+		point : 2,
+		questions : [ {
+			content : "填空题1",
+			answer : "1111"
+		}, {
+			content : "填空题2",
+			answer : "2222"
+		} ]
+	}, {
+		type : "单项选择题",
+		remark : "本题共%1个小题，每空%2分，共%3分",
+		count : 20,
+		point : 2,
+		questions : [ {
+			content : "单项选择题1",
+			options : [ "1  dfadfd", "2  fdafd", "3 fdafd", "4 dafdf" ]
+		}, {
+			content : "单项选择题2",
+			options : [ "1  trewt", "yteyt", "3 trwetr", "4 utyeuy" ],
+			answer : "2"
+		} ]
+	} ]
+}

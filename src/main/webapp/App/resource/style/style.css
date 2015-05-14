@@ -1,0 +1,35 @@
+.create {
+	background-image: url(../image/icons/create.png) !important;
+}
+
+.modify {
+	background-image: url(../image/icons/modify.png) !important;
+}
+
+.delete {
+	background-image: url(../image/icons/delete.png) !important;
+}
+
+.view {
+	background-image: url(../image/icons/view.png) !important;
+}
+
+.query {
+	background-image: url(../image/icons/query.png) !important;
+}
+
+.import {
+	background-image: url(../image/icons/import.png) !important;
+}
+
+.user {
+	background-image: url(../image/icons/user.png) !important;
+}
+
+.download {
+	background-image: url(../image/icons/download.png) !important;
+}
+
+.query {
+	background-image: url(../image/icons/query.png) !important;
+}

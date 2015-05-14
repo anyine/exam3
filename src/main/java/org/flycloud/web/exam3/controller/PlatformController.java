@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -21,19 +22,20 @@ public class PlatformController {
 	private PlatformService platformService;
 
 	@RequestMapping(value = { "/login" }, method = RequestMethod.POST)
-	public ModelAndView login(@RequestParam("name") String name,
+	@ResponseBody
+	public Map<String, Object> login(@RequestParam("name") String name,
 			@RequestParam("pass") String pass) {
-		Map<String, String> message = new HashMap<String,String>();
+		Map<String, Object> result = new HashMap<String,Object>();
 		try {
 			platformService.login(name, pass);
-			return new ModelAndView("index");
+			result.put("success", "true");
 		} catch (UserNotExistsException e) {
-			message.put("error", "用户名不存在，请检查登录名称是否正确！");
-			return new ModelAndView("login", message);
+			result.put("message", "用户名不存在，请检查登录名称是否正确！");
 		} catch (PasswordErrorException e) {
-			message.put("error", "用户密码错误，请检查登录密码是否正确！");
-			return new ModelAndView("login", message);
+			result.put("message", "用户密码错误，请检查登录密码是否正确！");
 		}
+		result.put("success", "true");
+		return result;
 	}
 
 	@RequestMapping(value = { "/", "/logout" }, method = RequestMethod.GET)
