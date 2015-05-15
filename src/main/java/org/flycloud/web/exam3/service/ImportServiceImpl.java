@@ -22,7 +22,6 @@ import org.flycloud.web.exam3.model.QuestionFormat;
 import org.flycloud.web.exam3.model.QuestionType;
 import org.flycloud.web.exam3.model.Resource;
 import org.flycloud.web.exam3.model.ResourceType;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,7 +35,7 @@ public class ImportServiceImpl implements ImportService {
 
 	@Inject
 	private QuestionDao questionDao;
-	
+
 	@Inject
 	private QuestionBankDao questionBankDao;
 
@@ -50,7 +49,7 @@ public class ImportServiceImpl implements ImportService {
 	public void importUser(List<List<Object>> llo) throws Exception {
 
 	}
-	
+
 	private QuestionBank getQuestionBank(String name) {
 		if (questionBankDao.exists(name)) {
 			return questionBankDao.findOne(name);
@@ -60,7 +59,7 @@ public class ImportServiceImpl implements ImportService {
 		questionBankDao.save(bank);
 		return bank;
 	}
-	
+
 	private QuestionFolder getQuestionFolder(QuestionBank bank, String name) {
 		QuestionFolder p = null;
 		if (name.matches("\\/.+$")) {
@@ -68,19 +67,19 @@ public class ImportServiceImpl implements ImportService {
 			p = getQuestionFolder(bank, parent);
 		}
 		QuestionFolder f = questionFolderDao.findByNameAndParent(name, p);
-		
+
 		if (f == null) {
 			f = new QuestionFolder();
 			f.setId(UUID.randomUUID().toString());
 			f.setBank(bank);
 			f.setParent(p);
 			f.setName(name);
-			f.setSerial(questionFolderDao.count()+1);
+			f.setSerial(questionFolderDao.count() + 1);
 			f = questionFolderDao.save(f);
 		}
 		return f;
 	}
-	
+
 	private Double getDifficult(String name) {
 		return Double.valueOf(name);
 	}
@@ -93,27 +92,34 @@ public class ImportServiceImpl implements ImportService {
 			for (int row = 1; row < sheet.getRows(); row++) {
 				Question q = new Question();
 				q.setId(UUID.randomUUID().toString());
-				QuestionBank bank = getQuestionBank(sheet.getCell(1, row).getContents());
-				q.setFolder(getQuestionFolder(bank, sheet.getCell(2, row).getContents()));//章节
-				q.setType(getQuestionType(bank, sheet.getCell(3, row).getContents(), sheet.getCell(4, row).getContents()));//题型
-				
+				QuestionBank bank = getQuestionBank(sheet.getCell(1, row)
+						.getContents());
+				q.setFolder(getQuestionFolder(bank, sheet.getCell(2, row)
+						.getContents()));// 章节
+				q.setType(getQuestionType(bank, sheet.getCell(3, row)
+						.getContents(), sheet.getCell(4, row).getContents()));// 题型
+
 				List<Resource> resources = new ArrayList<Resource>();
-				resources.add(getResource(ResourceType.Question, "题干", "text/plain", sheet.getCell(5, row).getContents()));
-				resources.add(getResource(ResourceType.Question, "选项", "text/plain", sheet.getCell(6, row).getContents()));
-				resources.add(getResource(ResourceType.Answer, "答案", "text/plain", sheet.getCell(7, row).getContents()));
+				resources.add(getResource(ResourceType.Question, "题干",
+						"text/plain", sheet.getCell(5, row).getContents()));
+				resources.add(getResource(ResourceType.Question, "选项",
+						"text/plain", sheet.getCell(6, row).getContents()));
+				resources.add(getResource(ResourceType.Answer, "答案",
+						"text/plain", sheet.getCell(7, row).getContents()));
 				q.setResources(resources);
-				
-				q.setDifficult(getDifficult(sheet.getCell(8, row).getContents()));//难易度
+
+				q.setDifficult(getDifficult(sheet.getCell(8, row).getContents()));// 难易度
 				questionDao.save(q);
 			}
 			book.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	
+
 	}
 
-	private Resource getResource(ResourceType type, String name, String mimeType, String contents) {
+	private Resource getResource(ResourceType type, String name,
+			String mimeType, String contents) {
 		Resource r = new Resource();
 		r.setCharset("UTF-8");
 		try {
@@ -128,9 +134,10 @@ public class ImportServiceImpl implements ImportService {
 		return r;
 	}
 
-	private QuestionType getQuestionType(QuestionBank bank, String type, String format) {
+	private QuestionType getQuestionType(QuestionBank bank, String type,
+			String format) {
 		QuestionType t = questionTypeDao.findByBankAndName(bank, type);
-		if (t == null ){
+		if (t == null) {
 			t = new QuestionType();
 			t.setId(UUID.randomUUID().toString());
 			t.setBank(bank);

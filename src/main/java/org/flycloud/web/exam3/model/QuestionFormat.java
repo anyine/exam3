@@ -65,10 +65,10 @@ public enum QuestionFormat {
 	public abstract String getName();
 
 	public abstract Boolean autoRating();
-	
+
 	public static QuestionFormat getByName(String name) {
-		for(QuestionFormat f : QuestionFormat.values()) {
-			if (f.getName().equals(name)){
+		for (QuestionFormat f : QuestionFormat.values()) {
+			if (f.getName().equals(name)) {
 				return f;
 			}
 		}

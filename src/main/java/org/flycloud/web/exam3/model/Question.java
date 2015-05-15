@@ -33,7 +33,7 @@ public class Question {
 
 	@OneToMany
 	private List<Resource> resources = new ArrayList<Resource>();
-	
+
 	public Date getCreateTime() {
 		return createTime;
 	}

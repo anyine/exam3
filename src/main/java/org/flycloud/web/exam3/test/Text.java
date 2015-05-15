@@ -1,15 +1,16 @@
 package org.flycloud.web.exam3.test;
+
 public abstract class Text {
 
-    public abstract String getText();
+	public abstract String getText();
 
-    public static Text str(final String string) {
-        return new Text() {
-            @Override
-            public String getText() {
-                return string;
-            }
-        };
-    }
+	public static Text str(final String string) {
+		return new Text() {
+			@Override
+			public String getText() {
+				return string;
+			}
+		};
+	}
 
 }

@@ -19,6 +19,6 @@ public enum ResourceType {
 			return "答案";
 		}
 	};
-	
+
 	public abstract String getName();
 }

@@ -16,10 +16,10 @@ import javax.persistence.ManyToOne;
 public class QuestionType {
 	@Id
 	private String id;
-	
+
 	@ManyToOne
 	private QuestionBank bank;
-	
+
 	private String name;
 
 	@Enumerated(EnumType.ORDINAL)
@@ -66,5 +66,5 @@ public class QuestionType {
 	public void setBank(QuestionBank bank) {
 		this.bank = bank;
 	}
-	
+
 }

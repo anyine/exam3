@@ -23,7 +23,7 @@ public class QuestionFolder {
 
 	@ManyToOne
 	private QuestionBank bank;
-	
+
 	@ManyToOne
 	private QuestionFolder parent;
 

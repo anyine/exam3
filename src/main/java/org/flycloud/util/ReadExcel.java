@@ -20,8 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class ReadExcel {
 
-	public static List<List<Object>> readExcel(MultipartFile file, int num, int length)
-			throws IOException {
+	public static List<List<Object>> readExcel(MultipartFile file, int num,
+			int length) throws IOException {
 		String fileName = file.getOriginalFilename();
 		String extension = fileName.lastIndexOf(".") == -1 ? "" : fileName
 				.substring(fileName.lastIndexOf(".") + 1);
