@@ -18,10 +18,9 @@ public class Question {
 	private String id;
 
 	@ManyToOne
-	private QuestionBank bank;
-
-	@ManyToOne
 	private QuestionFolder folder;
+
+	private Double difficult;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime = new Date();
@@ -43,14 +42,6 @@ public class Question {
 		this.createTime = createTime;
 	}
 
-	public QuestionBank getBank() {
-		return bank;
-	}
-
-	public void setBank(QuestionBank bank) {
-		this.bank = bank;
-	}
-
 	public String getId() {
 		return id;
 	}
@@ -66,8 +57,6 @@ public class Question {
 	public void setResources(List<Resource> resources) {
 		this.resources = resources;
 	}
-
-	private Integer difficult;
 
 	public List<QuestionTag> getTags() {
 		return tags;
@@ -93,11 +82,11 @@ public class Question {
 		this.type = type;
 	}
 
-	public Integer getDifficult() {
+	public Double getDifficult() {
 		return difficult;
 	}
 
-	public void setDifficult(Integer difficult) {
+	public void setDifficult(Double difficult) {
 		this.difficult = difficult;
 	}
 }

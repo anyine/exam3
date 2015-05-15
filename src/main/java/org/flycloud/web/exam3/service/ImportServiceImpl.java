@@ -1,20 +1,28 @@
 package org.flycloud.web.exam3.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import javax.inject.Inject;
 
-import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
 
+import org.flycloud.web.exam3.dao.QuestionBankDao;
 import org.flycloud.web.exam3.dao.QuestionDao;
 import org.flycloud.web.exam3.dao.QuestionFolderDao;
+import org.flycloud.web.exam3.dao.QuestionTypeDao;
+import org.flycloud.web.exam3.dao.ResourceDao;
 import org.flycloud.web.exam3.model.Question;
 import org.flycloud.web.exam3.model.QuestionBank;
 import org.flycloud.web.exam3.model.QuestionFolder;
+import org.flycloud.web.exam3.model.QuestionFormat;
+import org.flycloud.web.exam3.model.QuestionType;
+import org.flycloud.web.exam3.model.Resource;
+import org.flycloud.web.exam3.model.ResourceType;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,77 +36,109 @@ public class ImportServiceImpl implements ImportService {
 
 	@Inject
 	private QuestionDao questionDao;
+	
+	@Inject
+	private QuestionBankDao questionBankDao;
+
+	@Inject
+	private QuestionTypeDao questionTypeDao;
+
+	@Inject
+	private ResourceDao resourceDao;
 
 	@Override
 	public void importUser(List<List<Object>> llo) throws Exception {
 
 	}
 	
-	private QuestionBank getQuestionBank(String f) {
-		return null;
-	}
-	
-	private QuestionFolder getQuestionFolder(String f) {
-		return null;
-	}
-	
-	public void importQuestion(MultipartFile file) throws Exception {
-		long c = questionFolderDao.count();
-		if (c == 0) {
-			QuestionFolder pct = new QuestionFolder();
-			pct.setName("默认题库");
-			questionFolderDao.save(pct);
+	private QuestionBank getQuestionBank(String name) {
+		if (questionBankDao.exists(name)) {
+			return questionBankDao.findOne(name);
 		}
+		QuestionBank bank = new QuestionBank();
+		bank.setName(name);
+		questionBankDao.save(bank);
+		return bank;
+	}
+	
+	private QuestionFolder getQuestionFolder(QuestionBank bank, String name) {
+		QuestionFolder p = null;
+		if (name.matches("\\/.+$")) {
+			String parent = name.replaceFirst("[^\\/]+$", "");
+			p = getQuestionFolder(bank, parent);
+		}
+		QuestionFolder f = questionFolderDao.findByNameAndParent(name, p);
+		
+		if (f == null) {
+			f = new QuestionFolder();
+			f.setId(UUID.randomUUID().toString());
+			f.setBank(bank);
+			f.setParent(p);
+			f.setName(name);
+			f.setSerial(questionFolderDao.count()+1);
+			f = questionFolderDao.save(f);
+		}
+		return f;
+	}
+	
+	private Double getDifficult(String name) {
+		return Double.valueOf(name);
+	}
+
+	@Override
+	public void importQuestion(MultipartFile file) throws Exception {
 		try {
 			Workbook book = Workbook.getWorkbook(file.getInputStream());
 			Sheet sheet = book.getSheet(0);
-			int column = sheet.getColumns();
-			int row = sheet.getRows();
-			List<Question> questions = new ArrayList<Question>();
-			for (int i = 1; i < row; i++) {
+			for (int row = 1; row < sheet.getRows(); row++) {
 				Question q = new Question();
 				q.setId(UUID.randomUUID().toString());
-				for (int j = 1; j < column; j++) {
-					Cell cell1 = sheet.getCell(j, i);
-					String result = cell1.getContents();
-					switch (j) {
-//					case 1:
-//						q.set
-//					case 2:
-//						q.setFolder(this.getQuestionFolder(result));
-//						break;
-//					case 3:
-//						q.setType(result);
-//						createType(result);
-//						break;
-//					case 4:
-//						q.setContent(result);
-//						break;
-//					case 5:
-//						result = transCheckString(result);
-//						q.setAnContent(result);
-//						break;
-//					case 6:
-//						result = transCheckString(result);
-//						q.setAnswer(result);
-//						break;
-//					case 7:
-//						q.setDifficult();
-//						break;
-//					case 8:
-//						q.setRemark(result);
-//						break;
-					}
-				}
-				questions.add(q);
-			}
-			book.close();
-
-			for (Question q : questions) {
+				QuestionBank bank = getQuestionBank(sheet.getCell(1, row).getContents());
+				q.setFolder(getQuestionFolder(bank, sheet.getCell(2, row).getContents()));//章节
+				q.setType(getQuestionType(bank, sheet.getCell(3, row).getContents(), sheet.getCell(4, row).getContents()));//题型
+				
+				List<Resource> resources = new ArrayList<Resource>();
+				resources.add(getResource(ResourceType.Question, "题干", "text/plain", sheet.getCell(5, row).getContents()));
+				resources.add(getResource(ResourceType.Question, "选项", "text/plain", sheet.getCell(6, row).getContents()));
+				resources.add(getResource(ResourceType.Answer, "答案", "text/plain", sheet.getCell(7, row).getContents()));
+				q.setResources(resources);
+				
+				q.setDifficult(getDifficult(sheet.getCell(8, row).getContents()));//难易度
 				questionDao.save(q);
 			}
+			book.close();
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	
+	}
+
+	private Resource getResource(ResourceType type, String name, String mimeType, String contents) {
+		Resource r = new Resource();
+		r.setCharset("UTF-8");
+		try {
+			r.setContent(contents.getBytes("UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+		}
+		r.setId(UUID.randomUUID().toString());
+		r.setMimeType(mimeType);
+		r.setName(name);
+		r.setType(type);
+		r = resourceDao.save(r);
+		return r;
+	}
+
+	private QuestionType getQuestionType(QuestionBank bank, String type, String format) {
+		QuestionType t = questionTypeDao.findByBankAndName(bank, type);
+		if (t == null ){
+			t = new QuestionType();
+			t.setId(UUID.randomUUID().toString());
+			t.setBank(bank);
+			t.setFormat(QuestionFormat.getByName(format));
+			t.setName(type);
+			t.setSubjective(t.getFormat().autoRating());
+			t = questionTypeDao.save(t);
+		}
+		return t;
 	}
 }

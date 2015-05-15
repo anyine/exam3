@@ -61,30 +61,17 @@ public enum QuestionFormat {
 		public Boolean autoRating() {
 			return false;
 		}
-	},
-	Description {
-		@Override
-		public String getName() {
-			return "描述题";
-		}
-
-		@Override
-		public Boolean autoRating() {
-			return true;
-		}
-	},
-	WordEdit {
-		@Override
-		public String getName() {
-			return "文字编辑题";
-		}
-
-		@Override
-		public Boolean autoRating() {
-			return false;
-		}
 	};
 	public abstract String getName();
 
 	public abstract Boolean autoRating();
+	
+	public static QuestionFormat getByName(String name) {
+		for(QuestionFormat f : QuestionFormat.values()) {
+			if (f.getName().equals(name)){
+				return f;
+			}
+		}
+		return null;
+	}
 }

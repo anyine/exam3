@@ -3,6 +3,8 @@ package org.flycloud.web.exam3.model;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
@@ -13,7 +15,8 @@ public class Resource {
 	@Id
 	private String id;
 
-	private String type;
+	@Enumerated(EnumType.ORDINAL)
+	private ResourceType type;
 
 	private String name;
 
@@ -66,11 +69,11 @@ public class Resource {
 		this.content = content;
 	}
 
-	public String getType() {
+	public ResourceType getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(ResourceType type) {
 		this.type = type;
 	}
 

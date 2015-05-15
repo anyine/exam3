@@ -20,6 +20,9 @@ public class QuestionFolder {
 	private String name;
 
 	private Long serial;
+
+	@ManyToOne
+	private QuestionBank bank;
 	
 	@ManyToOne
 	private QuestionFolder parent;
@@ -50,6 +53,30 @@ public class QuestionFolder {
 
 	public void setSerial(Long serial) {
 		this.serial = serial;
+	}
+
+	public QuestionBank getBank() {
+		return bank;
+	}
+
+	public void setBank(QuestionBank bank) {
+		this.bank = bank;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public List<QuestionFolder> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<QuestionFolder> children) {
+		this.children = children;
 	}
 
 }
