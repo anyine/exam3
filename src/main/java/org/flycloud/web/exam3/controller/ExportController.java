@@ -1,13 +1,15 @@
 package org.flycloud.web.exam3.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import org.flycloud.web.exam3.model.Question;
+import org.flycloud.web.exam3.service.QuestionService;
 import org.flycloud.web.exam3.view.ExaminePdfView;
-import org.flycloud.web.exam3.view.QuestionExcelView;
+import org.flycloud.web.exam3.view.QuestionBankExcelView;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,9 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value = { "/export" })
 public class ExportController {
 
+	@Inject
+	private QuestionService questionService;
+
 	@RequestMapping(value = "/pdf/examine/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public ModelAndView examine(@PathVariable String id) {
@@ -27,12 +32,20 @@ public class ExportController {
 		return new ModelAndView(view, model);
 	}
 
-	@RequestMapping(value = "/excel/questionfolder/{id}", method = RequestMethod.GET)
-	@ResponseBody
-	public ModelAndView questionfolder(@PathVariable String id) {
-		QuestionExcelView view = new QuestionExcelView();
+	@RequestMapping(value = "/excel/questionbank/{id}", method = RequestMethod.GET)
+	public ModelAndView questionBank(@PathVariable String id) {
+		QuestionBankExcelView view = new QuestionBankExcelView();
 		Map<String, Object> model = new HashMap<String, Object>();
-		List<Question> list = new ArrayList<Question>();
+		List<Question> list = questionService.queryAll();
+		model.put("root", list);
+		return new ModelAndView(view, model);
+	}
+
+	@RequestMapping(value = "/excel/questions", method = RequestMethod.GET)
+	public ModelAndView questions() {
+		QuestionBankExcelView view = new QuestionBankExcelView();
+		Map<String, Object> model = new HashMap<String, Object>();
+		List<Question> list = questionService.queryAll();
 		model.put("root", list);
 		return new ModelAndView(view, model);
 	}

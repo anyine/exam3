@@ -65,16 +65,17 @@ public class ImportServiceImpl implements ImportService {
 				q.setType(getQuestionType(bank, sheet.getCell(3, row)
 						.getContents(), sheet.getCell(4, row).getContents()));// 题型
 
+				q.setDifficult(getDifficult(sheet.getCell(5, row).getContents()));// 难易度
+
 				List<Resource> resources = new ArrayList<Resource>();
 				resources.add(getResource(ResourceType.Question, "题干",
-						"text/plain", sheet.getCell(5, row).getContents()));
-				resources.add(getResource(ResourceType.Question, "选项",
 						"text/plain", sheet.getCell(6, row).getContents()));
-				resources.add(getResource(ResourceType.Answer, "答案",
+				resources.add(getResource(ResourceType.Question, "选项",
 						"text/plain", sheet.getCell(7, row).getContents()));
+				resources.add(getResource(ResourceType.Answer, "答案",
+						"text/plain", sheet.getCell(8, row).getContents()));
 				q.setResources(resources);
 
-				q.setDifficult(getDifficult(sheet.getCell(8, row).getContents()));// 难易度
 				questionDao.save(q);
 			}
 			book.close();
@@ -140,7 +141,7 @@ public class ImportServiceImpl implements ImportService {
 			String[] s = name.split("\\/");
 			name = s[s.length - 1];
 		}
-		QuestionFolder f = questionFolderDao.findByNameAndParent(name, p);
+		QuestionFolder f = questionFolderDao.findByNameAndParentAndBank(name, p, bank);
 
 		if (f == null) {
 			f = new QuestionFolder();
