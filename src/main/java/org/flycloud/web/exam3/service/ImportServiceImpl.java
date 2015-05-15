@@ -50,40 +50,6 @@ public class ImportServiceImpl implements ImportService {
 
 	}
 
-	private QuestionBank getQuestionBank(String name) {
-		if (questionBankDao.exists(name)) {
-			return questionBankDao.findOne(name);
-		}
-		QuestionBank bank = new QuestionBank();
-		bank.setName(name);
-		questionBankDao.save(bank);
-		return bank;
-	}
-
-	private QuestionFolder getQuestionFolder(QuestionBank bank, String name) {
-		QuestionFolder p = null;
-		if (name.matches("\\/.+$")) {
-			String parent = name.replaceFirst("[^\\/]+$", "");
-			p = getQuestionFolder(bank, parent);
-		}
-		QuestionFolder f = questionFolderDao.findByNameAndParent(name, p);
-
-		if (f == null) {
-			f = new QuestionFolder();
-			f.setId(UUID.randomUUID().toString());
-			f.setBank(bank);
-			f.setParent(p);
-			f.setName(name);
-			f.setSerial(questionFolderDao.count() + 1);
-			f = questionFolderDao.save(f);
-		}
-		return f;
-	}
-
-	private Double getDifficult(String name) {
-		return Double.valueOf(name);
-	}
-
 	@Override
 	public void importQuestion(MultipartFile file) throws Exception {
 		try {
@@ -115,7 +81,6 @@ public class ImportServiceImpl implements ImportService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	private Resource getResource(ResourceType type, String name,
@@ -147,5 +112,49 @@ public class ImportServiceImpl implements ImportService {
 			t = questionTypeDao.save(t);
 		}
 		return t;
+	}
+
+	private QuestionBank getQuestionBank(String name) {
+		QuestionBank bank = questionBankDao.findByName(name);
+		if (bank == null) {
+			bank = new QuestionBank();
+			bank.setId(UUID.randomUUID().toString());
+			bank.setName(name);
+			questionBankDao.save(bank);
+		}
+		return bank;
+	}
+
+	public static void main(String[] args) {
+		String name = "fkjsad/fsdfjls/fsdfsd";
+		if (name.matches("^.+\\/[^\\/]*$")) {
+			System.out.println(name.replaceFirst("/[^\\/]+$", ""));
+		}
+	}
+
+	private QuestionFolder getQuestionFolder(QuestionBank bank, String name) {
+		QuestionFolder p = null;
+		if (name.matches("^.+\\/[^\\/]*$")) {
+			String parent = name.replaceFirst("/[^\\/]+$", "");
+			p = getQuestionFolder(bank, parent);
+			String[] s = name.split("\\/");
+			name = s[s.length - 1];
+		}
+		QuestionFolder f = questionFolderDao.findByNameAndParent(name, p);
+
+		if (f == null) {
+			f = new QuestionFolder();
+			f.setId(UUID.randomUUID().toString());
+			f.setBank(bank);
+			f.setParent(p);
+			f.setName(name);
+			f.setSerial(questionFolderDao.count() + 1);
+			f = questionFolderDao.save(f);
+		}
+		return f;
+	}
+
+	private Double getDifficult(String name) {
+		return Double.valueOf(name);
 	}
 }

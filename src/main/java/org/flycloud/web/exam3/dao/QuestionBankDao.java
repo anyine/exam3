@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface QuestionBankDao extends JpaRepository<QuestionBank, String> {
 
+	QuestionBank findByName(String name);
+
 }
