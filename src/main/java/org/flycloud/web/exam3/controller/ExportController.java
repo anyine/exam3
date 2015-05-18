@@ -24,6 +24,7 @@ public class ExportController {
 	@Inject
 	private QuestionService questionService;
 
+	//导出试题（PDF格式）
 	@RequestMapping(value = "/pdf/examine/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public ModelAndView examine(@PathVariable String id) {
@@ -32,6 +33,7 @@ public class ExportController {
 		return new ModelAndView(view, model);
 	}
 
+	//导出某个题库（excel格式）
 	@RequestMapping(value = "/excel/questionbank/{id}", method = RequestMethod.GET)
 	public ModelAndView questionBank(@PathVariable String id) {
 		QuestionBankExcelView view = new QuestionBankExcelView();
@@ -41,8 +43,19 @@ public class ExportController {
 		return new ModelAndView(view, model);
 	}
 
+	//导出所有题库（excel格式）
 	@RequestMapping(value = "/excel/questions", method = RequestMethod.GET)
 	public ModelAndView questions() {
+		QuestionBankExcelView view = new QuestionBankExcelView();
+		Map<String, Object> model = new HashMap<String, Object>();
+		List<Question> list = questionService.queryAll();
+		model.put("root", list);
+		return new ModelAndView(view, model);
+	}
+
+	//导出某个题库的抽题模板（excel格式）
+	@RequestMapping(value = "/excel/examine/{id}", method = RequestMethod.GET)
+	public ModelAndView examinemodel(@PathVariable String id) {
 		QuestionBankExcelView view = new QuestionBankExcelView();
 		Map<String, Object> model = new HashMap<String, Object>();
 		List<Question> list = questionService.queryAll();
