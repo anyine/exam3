@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.Transient;
 
 @Entity
 public class QuestionFolder {
@@ -79,4 +80,26 @@ public class QuestionFolder {
 		this.children = children;
 	}
 
+	@Transient
+	public String getAbsoluteName() {
+		return getAbsoluteFolderName(this);
+	}
+
+	@Transient
+	public static String getAbsoluteFolderName(QuestionFolder folder) {
+		if (folder.getParent() != null)
+			return getAbsoluteFolderName(folder.getParent()) + "/"
+					+ folder.getName();
+		return folder.getName();
+	}
+
+	@Transient
+	public int getLevel() {
+		int i = 1;
+		QuestionFolder folder = this;
+		while ((folder = folder.getParent()) != null) {
+			i++;
+		}
+		return i;
+	}
 }

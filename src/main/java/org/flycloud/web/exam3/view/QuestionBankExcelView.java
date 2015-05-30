@@ -73,7 +73,7 @@ public class QuestionBankExcelView extends AbstractExcelView {
 			row.createCell(i++).setCellValue(ques.getType().getName());
 			row.createCell(i++).setCellValue(
 					ques.getType().getFormat().getName());
-			row.createCell(i++).setCellValue(ques.getDifficult().toString());
+			row.createCell(i++).setCellValue(ques.getLevel().getName());
 
 			List<Resource> r = ques.getResources();
 			Map<String, String> m = new HashMap<String, String>();

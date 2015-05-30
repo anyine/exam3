@@ -19,6 +19,7 @@ import org.flycloud.web.exam3.model.Question;
 import org.flycloud.web.exam3.model.QuestionBank;
 import org.flycloud.web.exam3.model.QuestionFolder;
 import org.flycloud.web.exam3.model.QuestionFormat;
+import org.flycloud.web.exam3.model.QuestionLevel;
 import org.flycloud.web.exam3.model.QuestionType;
 import org.flycloud.web.exam3.model.Resource;
 import org.flycloud.web.exam3.model.ResourceType;
@@ -65,8 +66,8 @@ public class ImportServiceImpl implements ImportService {
 				q.setType(getQuestionType(bank, sheet.getCell(3, row)
 						.getContents(), sheet.getCell(4, row).getContents()));// 题型
 
-				q.setDifficult(getDifficult(sheet.getCell(5, row).getContents()));// 难易度
-
+				q.setLevel(QuestionLevel.getByName(sheet.getCell(5, row).getContents()));// 难易度
+				
 				List<Resource> resources = new ArrayList<Resource>();
 				resources.add(getResource(ResourceType.Question, "题干",
 						"text/plain", sheet.getCell(6, row).getContents()));

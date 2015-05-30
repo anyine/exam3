@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -20,7 +22,8 @@ public class Question {
 	@ManyToOne
 	private QuestionFolder folder;
 
-	private Double difficult;
+	@Enumerated(EnumType.ORDINAL)
+	private QuestionLevel level;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime = new Date();
@@ -82,11 +85,11 @@ public class Question {
 		this.type = type;
 	}
 
-	public Double getDifficult() {
-		return difficult;
+	public QuestionLevel getLevel() {
+		return level;
 	}
 
-	public void setDifficult(Double difficult) {
-		this.difficult = difficult;
+	public void setLevel(QuestionLevel level) {
+		this.level = level;
 	}
 }
