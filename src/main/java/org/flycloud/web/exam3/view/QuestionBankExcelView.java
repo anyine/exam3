@@ -19,6 +19,11 @@ import org.flycloud.web.exam3.model.QuestionFolder;
 import org.flycloud.web.exam3.model.Resource;
 import org.springframework.web.servlet.view.document.AbstractExcelView;
 
+/**
+ * 导出EXCEL题库
+ * @author zhangbo
+ *
+ */
 public class QuestionBankExcelView extends AbstractExcelView {
 
 	private String getFullFolderName(QuestionFolder folder) {

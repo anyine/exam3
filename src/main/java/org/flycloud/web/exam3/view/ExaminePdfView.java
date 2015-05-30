@@ -16,6 +16,11 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfWriter;
 
+/**
+ * 演示实例
+ * @author zhangbo
+ *
+ */
 public class ExaminePdfView extends AbstractIText5PdfView {
 	@Override
 	protected void buildPdfDocument(Map<String, Object> model,

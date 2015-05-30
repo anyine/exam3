@@ -7,7 +7,9 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import org.flycloud.web.exam3.model.Question;
+import org.flycloud.web.exam3.model.QuestionBank;
 import org.flycloud.web.exam3.service.QuestionService;
+import org.flycloud.web.exam3.view.ExamineModelExcelView;
 import org.flycloud.web.exam3.view.ExaminePdfView;
 import org.flycloud.web.exam3.view.QuestionBankExcelView;
 import org.springframework.stereotype.Controller;
@@ -38,7 +40,7 @@ public class ExportController {
 	public ModelAndView questionBank(@PathVariable String id) {
 		QuestionBankExcelView view = new QuestionBankExcelView();
 		Map<String, Object> model = new HashMap<String, Object>();
-		List<Question> list = questionService.queryAll();
+		List<Question> list = questionService.queryAllQuestions();
 		model.put("root", list);
 		return new ModelAndView(view, model);
 	}
@@ -48,18 +50,18 @@ public class ExportController {
 	public ModelAndView questions() {
 		QuestionBankExcelView view = new QuestionBankExcelView();
 		Map<String, Object> model = new HashMap<String, Object>();
-		List<Question> list = questionService.queryAll();
+		List<Question> list = questionService.queryAllQuestions();
 		model.put("root", list);
 		return new ModelAndView(view, model);
 	}
 
-	//导出某个题库的抽题模板（excel格式）
-	@RequestMapping(value = "/excel/examine/{id}", method = RequestMethod.GET)
-	public ModelAndView examinemodel(@PathVariable String id) {
-		QuestionBankExcelView view = new QuestionBankExcelView();
+	//根据题库名称，导出某个题库的抽题模板（excel格式）
+	@RequestMapping(value = "/excel/examine/{name}", method = RequestMethod.GET)
+	public ModelAndView examinemodel(@PathVariable String name) {
+		ExamineModelExcelView view = new ExamineModelExcelView();
 		Map<String, Object> model = new HashMap<String, Object>();
-		List<Question> list = questionService.queryAll();
-		model.put("root", list);
+		QuestionBank bank = questionService.queryQuestionBankByName(name);
+		model.put("root", bank);
 		return new ModelAndView(view, model);
 	}
 
