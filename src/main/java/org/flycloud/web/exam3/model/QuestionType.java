@@ -24,8 +24,6 @@ public class QuestionType {
 
 	private String format;
 
-	private Boolean subjective;
-
 	public String getFormat() {
 		return format;
 	}
@@ -40,14 +38,6 @@ public class QuestionType {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Boolean getSubjective() {
-		return subjective;
-	}
-
-	public void setSubjective(Boolean subjective) {
-		this.subjective = subjective;
 	}
 
 	public String getId() {

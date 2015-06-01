@@ -113,7 +113,6 @@ public class ImportServiceImpl implements ImportService {
 			t.setBank(bank);
 			t.setFormat(format);
 			t.setName(type);
-			t.setSubjective(formatFactory.fromName(format).autoRating());
 			t = questionTypeDao.save(t);
 		}
 		return t;
