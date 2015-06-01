@@ -22,16 +22,15 @@ public class QuestionType {
 
 	private String name;
 
-	@Enumerated(EnumType.ORDINAL)
-	private QuestionFormat format;
+	private String format;
 
 	private Boolean subjective;
 
-	public QuestionFormat getFormat() {
+	public String getFormat() {
 		return format;
 	}
 
-	public void setFormat(QuestionFormat format) {
+	public void setFormat(String format) {
 		this.format = format;
 	}
 

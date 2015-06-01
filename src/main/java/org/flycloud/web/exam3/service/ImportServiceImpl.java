@@ -18,11 +18,11 @@ import org.flycloud.web.exam3.dao.ResourceDao;
 import org.flycloud.web.exam3.model.Question;
 import org.flycloud.web.exam3.model.QuestionBank;
 import org.flycloud.web.exam3.model.QuestionFolder;
-import org.flycloud.web.exam3.model.QuestionFormat;
 import org.flycloud.web.exam3.model.QuestionLevel;
 import org.flycloud.web.exam3.model.QuestionType;
 import org.flycloud.web.exam3.model.Resource;
 import org.flycloud.web.exam3.model.ResourceType;
+import org.flycloud.web.exam3.model.format.QuestionFormatFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,6 +31,9 @@ import org.springframework.web.multipart.MultipartFile;
 @Transactional
 public class ImportServiceImpl implements ImportService {
 
+	@Inject
+	private QuestionFormatFactory formatFactory;
+	
 	@Inject
 	private QuestionFolderDao questionFolderDao;
 
@@ -108,9 +111,9 @@ public class ImportServiceImpl implements ImportService {
 			t = new QuestionType();
 			t.setId(UUID.randomUUID().toString());
 			t.setBank(bank);
-			t.setFormat(QuestionFormat.getByName(format));
+			t.setFormat(format);
 			t.setName(type);
-			t.setSubjective(t.getFormat().autoRating());
+			t.setSubjective(formatFactory.fromName(format).autoRating());
 			t = questionTypeDao.save(t);
 		}
 		return t;

@@ -100,4 +100,7 @@
 		<property name="user" value="yantai_wy@126.com"></property>
 		<property name="pass" value="13963879660"></property>
 	</bean>
+	
+	<import resource="questionformats.xml"/>
+	
 </beans>

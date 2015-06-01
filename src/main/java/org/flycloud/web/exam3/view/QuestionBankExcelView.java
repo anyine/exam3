@@ -72,7 +72,7 @@ public class QuestionBankExcelView extends AbstractExcelView {
 			row.createCell(i++).setCellValue(getFullFolderName(ques.getFolder()));
 			row.createCell(i++).setCellValue(ques.getType().getName());
 			row.createCell(i++).setCellValue(
-					ques.getType().getFormat().getName());
+					ques.getType().getFormat());
 			row.createCell(i++).setCellValue(ques.getLevel().getName());
 
 			List<Resource> r = ques.getResources();
