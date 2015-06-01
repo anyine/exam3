@@ -76,24 +76,10 @@ public class QuestionBankExcelView extends AbstractExcelView {
 			row.createCell(i++).setCellValue(ques.getLevel().getName());
 
 			Map<String, String> m = ques.getProperties();
-			
-//			List<Resource> r = ques.getResources();
-//			Map<String, String> m = new HashMap<String, String>();
-//			for (Resource rr : r) {
-//				String content = new String(rr.getContent(), rr.getCharset());
-//				m.put(rr.getName(), content);
-//			}
-
 			row.createCell(i++).setCellValue(m.get("题干"));
 			row.createCell(i++).setCellValue(m.get("选项"));
 			row.createCell(i++).setCellValue(m.get("答案"));
 		}
-
-		// HSSFRow row = sheet.createRow(rowNum);
-		// row.createCell(0).setCellValue("TOTAL:");
-		// String formual = "SUM(D2:D" + rowNum + ")"; //
-		// D2到D[rowNum]单元格起(count数据)
-		// row.createCell(3).setCellFormula(formual);
 	}
 
 }

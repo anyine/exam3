@@ -78,14 +78,6 @@ public class ImportServiceImpl implements ImportService {
 				properties.put("选项", sheet.getCell(7, row).getContents());
 				properties.put("答案", sheet.getCell(8, row).getContents());
 				q.setProperties(properties);
-//				List<Resource> resources = new ArrayList<Resource>();
-//				resources.add(getResource(ResourceType.Question, "题干",
-//						"text/plain", sheet.getCell(6, row).getContents()));
-//				resources.add(getResource(ResourceType.Question, "选项",
-//						"text/plain", sheet.getCell(7, row).getContents()));
-//				resources.add(getResource(ResourceType.Answer, "答案",
-//						"text/plain", sheet.getCell(8, row).getContents()));
-//				q.setResources(resources);
 
 				questionDao.save(q);
 			}
