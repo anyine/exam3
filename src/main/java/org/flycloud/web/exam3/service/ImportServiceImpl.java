@@ -1,8 +1,9 @@
 package org.flycloud.web.exam3.service;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -70,15 +71,21 @@ public class ImportServiceImpl implements ImportService {
 						.getContents(), sheet.getCell(4, row).getContents()));// 题型
 
 				q.setLevel(QuestionLevel.getByName(sheet.getCell(5, row).getContents()));// 难易度
-				
-				List<Resource> resources = new ArrayList<Resource>();
-				resources.add(getResource(ResourceType.Question, "题干",
-						"text/plain", sheet.getCell(6, row).getContents()));
-				resources.add(getResource(ResourceType.Question, "选项",
-						"text/plain", sheet.getCell(7, row).getContents()));
-				resources.add(getResource(ResourceType.Answer, "答案",
-						"text/plain", sheet.getCell(8, row).getContents()));
-				q.setResources(resources);
+
+				Map<String,String> properties = q.getProperties();
+				properties.clear();
+				properties.put("题干", sheet.getCell(6, row).getContents());
+				properties.put("选项", sheet.getCell(7, row).getContents());
+				properties.put("答案", sheet.getCell(8, row).getContents());
+				q.setProperties(properties);
+//				List<Resource> resources = new ArrayList<Resource>();
+//				resources.add(getResource(ResourceType.Question, "题干",
+//						"text/plain", sheet.getCell(6, row).getContents()));
+//				resources.add(getResource(ResourceType.Question, "选项",
+//						"text/plain", sheet.getCell(7, row).getContents()));
+//				resources.add(getResource(ResourceType.Answer, "答案",
+//						"text/plain", sheet.getCell(8, row).getContents()));
+//				q.setResources(resources);
 
 				questionDao.save(q);
 			}

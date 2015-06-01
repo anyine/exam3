@@ -75,12 +75,14 @@ public class QuestionBankExcelView extends AbstractExcelView {
 					ques.getType().getFormat());
 			row.createCell(i++).setCellValue(ques.getLevel().getName());
 
-			List<Resource> r = ques.getResources();
-			Map<String, String> m = new HashMap<String, String>();
-			for (Resource rr : r) {
-				String content = new String(rr.getContent(), rr.getCharset());
-				m.put(rr.getName(), content);
-			}
+			Map<String, String> m = ques.getProperties();
+			
+//			List<Resource> r = ques.getResources();
+//			Map<String, String> m = new HashMap<String, String>();
+//			for (Resource rr : r) {
+//				String content = new String(rr.getContent(), rr.getCharset());
+//				m.put(rr.getName(), content);
+//			}
 
 			row.createCell(i++).setCellValue(m.get("题干"));
 			row.createCell(i++).setCellValue(m.get("选项"));

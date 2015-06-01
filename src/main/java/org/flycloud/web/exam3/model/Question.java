@@ -2,14 +2,21 @@ package org.flycloud.web.exam3.model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -33,6 +40,12 @@ public class Question {
 
 	@ManyToMany
 	private List<QuestionTag> tags = new ArrayList<QuestionTag>();
+
+	@ElementCollection(targetClass = java.lang.String.class)
+	@MapKeyColumn(name = "k")
+	@Column(name = "v", length = 1024 * 1024)
+	@CollectionTable(name = "property", joinColumns = @JoinColumn(name = "id"))
+	private Map<String, String> properties = new HashMap<String, String>();
 
 	@OneToMany
 	private List<Resource> resources = new ArrayList<Resource>();
@@ -92,4 +105,13 @@ public class Question {
 	public void setLevel(QuestionLevel level) {
 		this.level = level;
 	}
+
+	public Map<String, String> getProperties() {
+		return properties;
+	}
+
+	public void setProperties(Map<String, String> properties) {
+		this.properties = properties;
+	}
+
 }
