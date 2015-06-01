@@ -1,4 +1,4 @@
-package org.flycloud.util;
+package org.flycloud.web.exam3.util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +32,14 @@ public class IndexGenerator {
 			return "";
 		}
 		return getString();
+	}
+	
+	public String getIndent(int level) {
+		String ret = "";
+		while(level-- > 1) {
+			ret += "    ";
+		}
+		return ret;
 	}
 
 	private String getString() {

@@ -16,11 +16,11 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.flycloud.util.IndexGenerator;
 import org.flycloud.web.exam3.model.QuestionBank;
 import org.flycloud.web.exam3.model.QuestionFolder;
 import org.flycloud.web.exam3.model.QuestionLevel;
 import org.flycloud.web.exam3.model.QuestionType;
+import org.flycloud.web.exam3.util.IndexGenerator;
 import org.springframework.web.servlet.view.document.AbstractExcelView;
 
 public class ExamineModelExcelView extends AbstractExcelView {
@@ -54,14 +54,16 @@ public class ExamineModelExcelView extends AbstractExcelView {
 		columnHeadStyle.setFont(columnHeadFont);
 		columnHeadStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);// 左右居中
 		columnHeadStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);// 上下居中
-//		columnHeadStyle.setLocked(true);
-//		columnHeadStyle.setWrapText(true);
-//		columnHeadStyle.setLeftBorderColor(HSSFColor.BLACK.index);// 左边框的颜色
-//		columnHeadStyle.setBorderLeft((short) 1);// 边框的大小
-//		columnHeadStyle.setRightBorderColor(HSSFColor.BLACK.index);// 右边框的颜色
-//		columnHeadStyle.setBorderRight((short) 1);// 边框的大小
-//		columnHeadStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN); // 设置单元格的边框为粗体
-//		columnHeadStyle.setBottomBorderColor(HSSFColor.BLACK.index); // 设置单元格的边框颜色
+		// columnHeadStyle.setLocked(true);
+		// columnHeadStyle.setWrapText(true);
+		// columnHeadStyle.setLeftBorderColor(HSSFColor.BLACK.index);// 左边框的颜色
+		// columnHeadStyle.setBorderLeft((short) 1);// 边框的大小
+		// columnHeadStyle.setRightBorderColor(HSSFColor.BLACK.index);// 右边框的颜色
+		// columnHeadStyle.setBorderRight((short) 1);// 边框的大小
+		// columnHeadStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN); //
+		// 设置单元格的边框为粗体
+		// columnHeadStyle.setBottomBorderColor(HSSFColor.BLACK.index); //
+		// 设置单元格的边框颜色
 		// 设置单元格的背景颜色（单元格的样式会覆盖列或行的样式）
 		columnHeadStyle.setFillForegroundColor(HSSFColor.BLUE.index);
 		//
@@ -87,7 +89,7 @@ public class ExamineModelExcelView extends AbstractExcelView {
 		sheet.addMergedRegion(range2);
 
 		HSSFRow header2 = sheet.createRow(1);
-		
+
 		for (int l = 0; l < bank.getTypes().size(); l++) {
 			QuestionType type = bank.getTypes().get(l);
 			c = header1.createCell(i);
@@ -124,12 +126,13 @@ public class ExamineModelExcelView extends AbstractExcelView {
 			i = 0;
 
 			c = row.createCell(i++);
-			c.setCellValue(ig.getIndex(f.getLevel()));
-
-			c = row.createCell(i++);
-			c.setCellValue(f.getName());
+			c.setCellValue("");
 			
-			for(QuestionType t : bank.getTypes()) {
+			c = row.createCell(i++);
+			c.setCellValue(ig.getIndent(f.getLevel())
+					+ ig.getIndex(f.getLevel()) +"  "+ f.getName());
+
+			for (QuestionType t : bank.getTypes()) {
 				for (QuestionLevel l : QuestionLevel.values()) {
 					c = row.createCell(i++);
 					c.setCellValue(10);

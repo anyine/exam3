@@ -15,8 +15,7 @@ public class ExcelUtil {
 	/**
 	 * 用于将Excel表格中列号字母转成列索引，从1对应A开始
 	 * 
-	 * @param column
-	 *            列号
+	 * @param column 列号
 	 * @return 列索引
 	 */
 	public static int columnToIndex(String column) {
