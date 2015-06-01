@@ -42,10 +42,10 @@ public class ExamineModelServiceImpl implements ExamineModelService {
 				for (int i = 0; i < list.size(); i++) {
 					ExtractMethod item = new ExtractMethod();
 					Object[] objs = (Object[]) list.get(i);
-//					item.setTargetId(objs[0].toString());
-//					item.setStandardName(objs[1].toString());
-//					item.setTargetName(objs[2].toString());
-//					item.setSumScore(objs[3].toString());
+					// item.setTargetId(objs[0].toString());
+					// item.setStandardName(objs[1].toString());
+					// item.setTargetName(objs[2].toString());
+					// item.setSumScore(objs[3].toString());
 					rows.add(item);
 				}
 			}

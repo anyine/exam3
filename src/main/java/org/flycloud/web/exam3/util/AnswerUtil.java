@@ -9,15 +9,13 @@ public class AnswerUtil {
 	public static String getJudgmentAnswer(String answer) {
 		answer = answer.toUpperCase();
 		if ((answer.contains("错误") && !answer.contains("不错误"))
-				|| answer.contains("RIGHT")
-				|| answer.contains("A")
+				|| answer.contains("RIGHT") || answer.contains("A")
 				|| answer.contains("X")
 				|| (answer.contains("错") && !answer.contains("不错"))
 				|| answer.contains("不正确") || answer.contains("不对")) {
 			return "错误";
 		} else if ((answer.contains("正确") && !answer.contains("不正确"))
-				|| answer.contains("WRONG")
-				|| answer.contains("B")
+				|| answer.contains("WRONG") || answer.contains("B")
 				|| answer.contains("V")
 				|| (answer.contains("对") && !answer.contains("不对"))
 				|| answer.contains("不错误") || answer.contains("不错")) {

@@ -17,7 +17,7 @@ public class QuestionServiceImpl implements QuestionService {
 	private QuestionDao questionDao;
 	@Inject
 	private QuestionBankDao questionBankDao;
-	
+
 	@Override
 	public List<Question> queryAllQuestions() {
 		return questionDao.findAll();

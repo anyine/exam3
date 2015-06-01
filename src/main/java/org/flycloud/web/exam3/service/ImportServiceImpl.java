@@ -34,7 +34,7 @@ public class ImportServiceImpl implements ImportService {
 
 	@Inject
 	private QuestionFormatFactory formatFactory;
-	
+
 	@Inject
 	private QuestionFolderDao questionFolderDao;
 
@@ -70,9 +70,10 @@ public class ImportServiceImpl implements ImportService {
 				q.setType(getQuestionType(bank, sheet.getCell(3, row)
 						.getContents(), sheet.getCell(4, row).getContents()));// 题型
 
-				q.setLevel(QuestionLevel.getByName(sheet.getCell(5, row).getContents()));// 难易度
+				q.setLevel(QuestionLevel.getByName(sheet.getCell(5, row)
+						.getContents()));// 难易度
 
-				Map<String,String> properties = q.getProperties();
+				Map<String, String> properties = q.getProperties();
 				properties.clear();
 				properties.put("题干", sheet.getCell(6, row).getContents());
 				properties.put("选项", sheet.getCell(7, row).getContents());
@@ -143,7 +144,8 @@ public class ImportServiceImpl implements ImportService {
 			String[] s = name.split("\\/");
 			name = s[s.length - 1];
 		}
-		QuestionFolder f = questionFolderDao.findByNameAndParentAndBank(name, p, bank);
+		QuestionFolder f = questionFolderDao.findByNameAndParentAndBank(name,
+				p, bank);
 
 		if (f == null) {
 			f = new QuestionFolder();

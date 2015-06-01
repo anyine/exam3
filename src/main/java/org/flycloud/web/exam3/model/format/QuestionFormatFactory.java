@@ -13,7 +13,7 @@ public class QuestionFormatFactory {
 	public void setFormats(Map<String, IQuestionFormat> formats) {
 		this.formats = formats;
 	}
-	
+
 	public IQuestionFormat fromName(String name) {
 		return formats.get(name);
 	}

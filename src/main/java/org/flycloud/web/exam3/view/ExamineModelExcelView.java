@@ -127,10 +127,10 @@ public class ExamineModelExcelView extends AbstractExcelView {
 
 			c = row.createCell(i++);
 			c.setCellValue("");
-			
+
 			c = row.createCell(i++);
 			c.setCellValue(ig.getIndent(f.getLevel())
-					+ ig.getIndex(f.getLevel()) +"  "+ f.getName());
+					+ ig.getIndex(f.getLevel()) + "  " + f.getName());
 
 			for (QuestionType t : bank.getTypes()) {
 				for (QuestionLevel l : QuestionLevel.values()) {

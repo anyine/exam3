@@ -45,7 +45,7 @@ public class MailSender {
 	private Authenticator authenticator;
 	private boolean isInit = false;
 	Session sendMailSession;
-	
+
 	private void init() {
 		if (isInit)
 			return;
@@ -57,8 +57,8 @@ public class MailSender {
 				return new PasswordAuthentication(user, pass);
 			}
 		};
-		sendMailSession = Session.getDefaultInstance(
-				this.properties, authenticator);
+		sendMailSession = Session.getDefaultInstance(this.properties,
+				authenticator);
 		isInit = true;
 	}
 
@@ -79,7 +79,7 @@ public class MailSender {
 			e.printStackTrace();
 		}
 	}
- 	
+
 	public static void main(String[] args) throws InterruptedException {
 		Properties p = new Properties();
 		p.put("mail.smtp.host", "smtp.163.com");
@@ -90,7 +90,7 @@ public class MailSender {
 		sender.setPass("*******");
 		sender.setUser("zhangbo7364@163.com");
 		sender.setProperties(p);
-		
+
 		sender.send("zhangbo7364@126.com", "重要通知", "晚上一定要吃饭");
 		Thread.sleep(5000);
 		sender.send("zhangbo7364@126.com", "重要通知", "白天不要睡觉");

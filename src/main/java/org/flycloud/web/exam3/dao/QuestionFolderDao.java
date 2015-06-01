@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface QuestionFolderDao extends
 		JpaRepository<QuestionFolder, String> {
 
-	QuestionFolder findByNameAndParentAndBank(String name, QuestionFolder parent,
-			QuestionBank bank);
+	QuestionFolder findByNameAndParentAndBank(String name,
+			QuestionFolder parent, QuestionBank bank);
 
 }

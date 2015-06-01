@@ -20,8 +20,8 @@ public class IndexGenerator {
 			indexes.set(level, indexes.get(level) + 1);
 		} else if (level < currentLevel) {
 			int i = currentLevel - level;
-			while(i-- > 0) {
-				indexes.remove(indexes.size()-1);
+			while (i-- > 0) {
+				indexes.remove(indexes.size() - 1);
 			}
 			indexes.set(level, indexes.get(level) + 1);
 			currentLevel = level;
@@ -33,10 +33,10 @@ public class IndexGenerator {
 		}
 		return getString();
 	}
-	
+
 	public String getIndent(int level) {
 		String ret = "";
-		while(level-- > 1) {
+		while (level-- > 1) {
 			ret += "    ";
 		}
 		return ret;

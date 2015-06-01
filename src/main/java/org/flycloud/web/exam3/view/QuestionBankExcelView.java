@@ -21,6 +21,7 @@ import org.springframework.web.servlet.view.document.AbstractExcelView;
 
 /**
  * 导出EXCEL题库
+ * 
  * @author zhangbo
  *
  */
@@ -69,10 +70,10 @@ public class QuestionBankExcelView extends AbstractExcelView {
 			row.createCell(i++).setCellValue(rowNum - 1);
 			row.createCell(i++).setCellValue(
 					ques.getFolder().getBank().getName());
-			row.createCell(i++).setCellValue(getFullFolderName(ques.getFolder()));
-			row.createCell(i++).setCellValue(ques.getType().getName());
 			row.createCell(i++).setCellValue(
-					ques.getType().getFormat());
+					getFullFolderName(ques.getFolder()));
+			row.createCell(i++).setCellValue(ques.getType().getName());
+			row.createCell(i++).setCellValue(ques.getType().getFormat());
 			row.createCell(i++).setCellValue(ques.getLevel().getName());
 
 			Map<String, String> m = ques.getProperties();
