@@ -128,6 +128,15 @@ public class ExamineModelExcelView extends AbstractExcelView {
 
 			c = row.createCell(i++);
 			c.setCellValue(f.getName());
+			
+			for(QuestionType t : bank.getTypes()) {
+				for (QuestionLevel l : QuestionLevel.values()) {
+					c = row.createCell(i++);
+					c.setCellValue(10);
+					c = row.createCell(i++);
+					c.setCellValue(0);
+				}
+			}
 		}
 
 		// HSSFRow row = sheet.createRow(rowNum);
