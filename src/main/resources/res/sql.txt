@@ -1,0 +1,10 @@
+使用管理员身份运行以下命令
+mysqld --install mysql5.6.14
+mysqld --remove mysql5.6.14
+mysqladmin -uroot password poiuyt
+
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' identified by 'poiuyt'  WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+CREATE DATABASE `exam` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+CREATE SCHEMA `exam` DEFAULT CHARACTER SET utf8 ;

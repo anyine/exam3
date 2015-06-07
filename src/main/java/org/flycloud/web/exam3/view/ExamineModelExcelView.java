@@ -31,10 +31,108 @@ public class ExamineModelExcelView extends AbstractExcelView {
 
 		QuestionBank bank = (QuestionBank) model.get("root");
 
+		HSSFSheet sheet = workbook.createSheet("抽题模板");
+		
+		createCells(sheet, bank);
+		
 		response.setContentType("application/octet-stream");
 		response.setHeader("Content-Disposition", "attachment; filename=\""
 				+ URLEncoder.encode(bank.getName() + "-抽题模板.xls", "UTF-8")
 				+ "\"");
+	}
+	
+	private void createCells(HSSFSheet sheet, QuestionBank bank) {
+		int levelNum = QuestionLevel.values().length;//试题难度数量
+		int typeNum = bank.getTypes().size();//试题类型数量
+		int folderNum = bank.getFolders().size();//试题分类
+		
+		sheet.createFreezePane(5, 4, 5, 4);
+
+		HSSFRow header1 = sheet.createRow(0);
+		HSSFRow header2 = sheet.createRow(1);
+		HSSFRow header3 = sheet.createRow(2);
+		HSSFRow header4 = sheet.createRow(3);
+		
+		HSSFCell c = header1.createCell(0);
+		c.setCellValue("序号");
+		
+		c = header1.createCell(1);
+		c.setCellValue("级别");
+		
+		c = header1.createCell(2);
+		c.setCellValue("章节");
+		
+		c = header1.createCell(3);
+		c.setCellValue("分数");
+		
+		c = header1.createCell(4);
+		c.setCellValue("占比");
+		
+		c = header4.createCell(0);
+		c.setCellValue("");
+		
+		c = header4.createCell(1);
+		c.setCellValue("");
+		
+		c = header4.createCell(2);
+		c.setCellValue("合计：");
+		
+		c = header4.createCell(3);
+		c.setCellValue("100");
+		
+		c = header4.createCell(4);
+		c.setCellValue("100%");
+		
+		sheet.addMergedRegion(new CellRangeAddress(0, 2, 0, 0));
+		sheet.addMergedRegion(new CellRangeAddress(0, 2, 1, 1));
+		sheet.addMergedRegion(new CellRangeAddress(0, 2, 2, 2));
+		sheet.addMergedRegion(new CellRangeAddress(0, 2, 3, 3));
+		sheet.addMergedRegion(new CellRangeAddress(0, 2, 4, 4));
+
+		int rowNum = 4;
+		IndexGenerator ig = new IndexGenerator();
+		for (QuestionFolder f : bank.getFolders()) {
+			HSSFRow row = sheet.createRow(rowNum++);
+			int i = 0;
+
+			//序号
+			c = row.createCell(i++);
+			c.setCellValue(""+(rowNum-4));
+
+			//级别
+			c = row.createCell(i++);
+			c.setCellValue(f.getLevel());
+			
+			//章节
+			c = row.createCell(i++);
+			c.setCellValue(ig.getIndent(f.getLevel())
+					+ ig.getIndex(f.getLevel()) + "  " + f.getName());
+
+			//分数
+			c = row.createCell(i++);
+			c.setCellValue(f.getLevel());
+			
+			//占比
+			c = row.createCell(i++);
+			c.setCellValue(f.getLevel());
+			
+//			for (QuestionType t : bank.getTypes()) {
+//				for (QuestionLevel l : QuestionLevel.values()) {
+//					c = row.createCell(i++);
+//					c.setCellValue(10);
+//					c = row.createCell(i++);
+//					c.setCellValue(0);
+//				}
+//			}
+		}
+	}
+
+
+	protected void buildExcelDocument1(Map<String, Object> model,
+				HSSFWorkbook workbook, HttpServletRequest request,
+				HttpServletResponse response) throws Exception {
+
+		QuestionBank bank = (QuestionBank) model.get("root");
 
 		HSSFSheet sheet = workbook.createSheet("抽题模板");
 
@@ -67,7 +165,8 @@ public class ExamineModelExcelView extends AbstractExcelView {
 		// 设置单元格的背景颜色（单元格的样式会覆盖列或行的样式）
 		columnHeadStyle.setFillForegroundColor(HSSFColor.BLUE.index);
 		//
-
+		
+		
 		sheet.createFreezePane(2, 2, 2, 2);
 
 		HSSFRow header1 = sheet.createRow(0);
@@ -142,11 +241,10 @@ public class ExamineModelExcelView extends AbstractExcelView {
 			}
 		}
 
-		// HSSFRow row = sheet.createRow(rowNum);
-		// row.createCell(0).setCellValue("TOTAL:");
-		// String formual = "SUM(D2:D" + rowNum + ")"; //
-		// D2到D[rowNum]单元格起(count数据)
-		// row.createCell(3).setCellFormula(formual);
+		response.setContentType("application/octet-stream");
+		response.setHeader("Content-Disposition", "attachment; filename=\""
+				+ URLEncoder.encode(bank.getName() + "-抽题模板.xls", "UTF-8")
+				+ "\"");
 	}
 
 }
