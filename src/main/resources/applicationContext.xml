@@ -100,6 +100,14 @@
 		<property name="user" value="yantai_wy@126.com"></property>
 		<property name="pass" value="13963879660"></property>
 	</bean>
+    
+	<bean class="org.flycloud.util.Exporter">
+		<property name="dump" value="C:\\Program Files\\MySQL\\MySQL Server 5.5\\bin\\mysqldump.exe"></property>
+		<property name="path" value="z://backup"></property>
+		<property name="database" value="exam"></property>
+		<property name="user" value="root"></property>
+		<property name="password" value="poiuyt"></property>
+	</bean>
 	
 	<import resource="questionformats.xml"/>
 	

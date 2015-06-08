@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.flycloud.util.Exporter;
 import org.flycloud.web.exam3.model.Question;
 import org.flycloud.web.exam3.model.QuestionBank;
 import org.flycloud.web.exam3.service.QuestionService;
@@ -26,6 +27,16 @@ public class ExportController {
 	@Inject
 	private QuestionService questionService;
 
+	@Inject
+	private Exporter exporter;
+
+	// 导出数据库（SQL格式）
+	@RequestMapping(value = "/sql", method = RequestMethod.GET)
+	public String sqldump() {
+		exporter.export();
+		return "index";
+	}
+	
 	// 导出试题（PDF格式）
 	@RequestMapping(value = "/pdf/examine/{id}", method = RequestMethod.GET)
 	@ResponseBody
