@@ -105,7 +105,7 @@ public class Exporter {
 	public static void main(String[] args) {
 		Exporter e = new Exporter();
 		e.setDump("C:\\Program Files\\MySQL\\MySQL Server 5.5\\bin\\mysqldump.exe");
-		e.setDatabase("exam");
+		e.setDatabase("spider3");
 		e.setPassword("poiuyt");
 		e.setPath("z://back");
 		e.export();
