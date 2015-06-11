@@ -11,6 +11,7 @@ public class IndividualChoiceFormat extends ChoiceFormat {
 			String qs = q.getProperties().get("题干");
 			throw new Exception("单项选择题《"+qs+"》答案应该只有一个选项:<"+string+">");
 		}
+		this.validateAnswer(q);
 	}
 
 }
