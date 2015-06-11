@@ -1,6 +1,9 @@
 package org.flycloud.web.exam3.service;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -62,25 +65,12 @@ public class ImportServiceImpl implements ImportService {
 			Workbook book = Workbook.getWorkbook(file.getInputStream());
 			Sheet sheet1 = book.getSheet(0);
 			ExcelReader reader = new ExcelReader(sheet1);
-			
-			for (int row = 1; row < reader.getRows()-1; row++) {
-				Map<String,String> map = reader.getRow(row);
-				
-				Question q = new Question();
-				q.setId(UUID.randomUUID().toString());
-				map.remove("序号");
-				QuestionBank bank = getQuestionBank(map.remove("题库"));
-				q.setFolder(getQuestionFolder(bank, map.remove("章节")));
-				q.setType(getQuestionType(bank, map.remove("题型"), map.get("格式")));
-				q.setLevel(QuestionLevel.getByName(map.remove("难易")));
-				IQuestionFormat iqf = formatFactory.fromName(map.get("格式"));
-				if (iqf == null) {
-					throw new Exception(map.get("格式")+":不是合法的试题格式名称！");
-				}
-				map.remove("格式");
-				iqf.setProperties(q, map);
-				questionDao.save(q);
+
+			for (int row = 1; row < reader.getRows() - 1; row++) {
+				Map<String, String> map = reader.getRow(row);
+				this.createQuestion(map);
 			}
+
 			book.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -149,5 +139,63 @@ public class ImportServiceImpl implements ImportService {
 			f = questionFolderDao.save(f);
 		}
 		return f;
+	}
+
+	@Override
+	public void importTextQuestion(MultipartFile file) throws Exception {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(
+				file.getInputStream(), "UTF-8"));
+		String line;
+		Map<String, String> map = new HashMap<String, String>();
+		String value = "";
+		String key = "";
+		while ((line = reader.readLine()) != null) {
+			if (line.equals("")) {
+				continue;
+			}
+			if (line.matches("^(题库|章节|题型|格式|难易|题干|答案|[A-Za-z])[）．：,、 .，].*")) {
+				if(!key.equals("")) {
+					map.put(key, value);
+				}
+				key = line.replaceAll("[）．：,、 .，].*$", "");
+				value = line.replaceAll(
+						"^(题库|章节|题型|格式|题干|难易|答案|[A-Za-z])[）．：,、 .，]", "");
+				if (key.equals("题干") && map.containsKey("题干")) {
+					map = this.createQuestion(map);
+				}
+			} else {
+				value += "\r\n" + line;
+			}
+		}
+		map.put(key, value);
+		map = this.createQuestion(map);
+
+		reader.close();
+
+	}
+
+	private Map<String, String> createQuestion(Map<String, String> map)
+			throws Exception {
+		Map<String, String> dirmap = new HashMap<String, String>();
+		dirmap.put("序号", map.remove("序号"));
+		dirmap.put("题库", map.remove("题库"));
+		dirmap.put("章节", map.remove("章节"));
+		dirmap.put("题型", map.remove("题型"));
+		dirmap.put("格式", map.remove("格式"));
+		dirmap.put("难易", map.remove("难易"));
+
+		Question q = new Question();
+		q.setId(UUID.randomUUID().toString());
+		QuestionBank bank = getQuestionBank(dirmap.get("题库"));
+		q.setFolder(getQuestionFolder(bank, dirmap.get("章节")));
+		q.setType(getQuestionType(bank, dirmap.get("题型"), dirmap.get("格式")));
+		q.setLevel(QuestionLevel.getByName(dirmap.get("难易")));
+		IQuestionFormat iqf = formatFactory.fromName(dirmap.get("格式"));
+		if (iqf == null) {
+			throw new Exception(dirmap.get("格式") + ":不是合法的试题格式名称！");
+		}
+		iqf.setProperties(q, map);
+		questionDao.save(q);
+		return dirmap;
 	}
 }

@@ -26,5 +26,15 @@ public class ImportController {
 		}
 		return "index";
 	}
-
+	
+	@RequestMapping(value = "/text/question", method = RequestMethod.POST)
+	public String text(
+			@RequestParam(value = "file", required = false) MultipartFile file) {
+		try {
+			importService.importTextQuestion(file);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "index";
+	}
 }

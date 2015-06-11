@@ -66,6 +66,16 @@ public class ExportController {
 		return new ModelAndView(view, model);
 	}
 
+	// 导出所有题库（text格式）
+	@RequestMapping(value = "/text/questions", method = RequestMethod.GET)
+	public ModelAndView texts() {
+		QuestionBankExcelView view = new QuestionBankExcelView();
+		Map<String, Object> model = new HashMap<String, Object>();
+		List<Question> list = questionService.queryAllQuestions();
+		model.put("root", list);
+		return new ModelAndView(view, model);
+	}
+
 	// 根据题库名称，导出某个题库的抽题模板（excel格式）
 	@RequestMapping(value = "/excel/examine/{name}", method = RequestMethod.GET)
 	public ModelAndView examinemodel(@PathVariable String name) {

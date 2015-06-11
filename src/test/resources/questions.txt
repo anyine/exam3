@@ -1,0 +1,57 @@
+﻿
+题库：java
+章节：java
+题型：单项选择题
+格式：单选题
+难易：容易
+
+题干：Java是从哪种语言改进重新设计。
+A．Ada
+B．C++
+C．Pasacal
+D．BASIC
+答案：B
+
+题干．下列语句哪一个正确（） 
+A． Java程序经编译后会产生machine code 
+B． Java程序经编译后会产生byte code 
+C． Java程序经编译后会产生DLL 
+D．以上都不正确 
+答案：B  
+
+题干．下列说法正确的有（） 
+A．class中的constructor不可省略 
+B．constructor必须与class同名，但方法不能与class同名 
+C．constructor在一个对象被new时执行 
+D．一个class只能定义一个constructor 
+答案：C 
+
+题干. list是一个ArrayList的对象，哪个选项的代码填写到//todo delete处，可以在Iterator
+遍历的过程中正确并安全的删除一个list中保存的对象？(  D  ) 
+Iterator it = list.iterator(); 
+int index = 0; 
+while (it.hasNext()) { 
+    Object obj = it.next(); 
+    if (needDelete(obj)) {
+        //todo delete 
+    } 
+    index ++; 
+}  
+A）list.remove(obj); 
+B）list.remove(index); 
+C）list.remove(it.next()); 
+D）it.remove(); 
+答案：D
+
+题干．执行如下程序代码后，c的值是（）
+	a=0; c=0;
+	do{
+		--c;
+		a=a-1; 
+	} while( a>0 );
+A．0
+B．1
+C．-1
+D．死循环
+答案：C
+

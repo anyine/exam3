@@ -28,12 +28,12 @@ public abstract class ChoiceFormat implements IQuestionFormat {
 	public boolean autoRating() {
 		return true;
 	}
-	
+
 	protected void validateAnswer(Question q) throws Exception {
 		String a = q.getProperties().get("答案");
-		for(char x : a.toCharArray()) {
-			if (!q.getProperties().containsKey(""+x)) {
-				throw new Exception("答案中的选项不存在:"+x);
+		for (char x : a.toCharArray()) {
+			if (!q.getProperties().containsKey("" + x)) {
+				throw new Exception("答案中的选项不存在:" + x);
 			}
 		}
 	}

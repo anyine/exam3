@@ -56,7 +56,12 @@ public class QuestionBankExcelView extends AbstractExcelView {
 		header.createCell(i++).setCellValue("格式");
 		header.createCell(i++).setCellValue("难易");
 		header.createCell(i++).setCellValue("题干");
-		header.createCell(i++).setCellValue("选项");
+		header.createCell(i++).setCellValue("A");
+		header.createCell(i++).setCellValue("B");
+		header.createCell(i++).setCellValue("C");
+		header.createCell(i++).setCellValue("D");
+		header.createCell(i++).setCellValue("E");
+		header.createCell(i++).setCellValue("F");
 		header.createCell(i++).setCellValue("答案");
 
 		HSSFCellStyle dateStyle = workbook.createCellStyle();
@@ -78,7 +83,12 @@ public class QuestionBankExcelView extends AbstractExcelView {
 
 			Map<String, String> m = ques.getProperties();
 			row.createCell(i++).setCellValue(m.get("题干"));
-			row.createCell(i++).setCellValue(m.get("选项"));
+			row.createCell(i++).setCellValue(m.get("A"));
+			row.createCell(i++).setCellValue(m.get("B"));
+			row.createCell(i++).setCellValue(m.get("C"));
+			row.createCell(i++).setCellValue(m.get("D"));
+			row.createCell(i++).setCellValue(m.get("E"));
+			row.createCell(i++).setCellValue(m.get("F"));
 			row.createCell(i++).setCellValue(m.get("答案"));
 		}
 	}
