@@ -1,7 +1,6 @@
 package org.flycloud.web.exam3.service;
 
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -11,6 +10,7 @@ import javax.inject.Inject;
 import jxl.Sheet;
 import jxl.Workbook;
 
+import org.flycloud.util.ExcelReader;
 import org.flycloud.web.exam3.dao.QuestionBankDao;
 import org.flycloud.web.exam3.dao.QuestionDao;
 import org.flycloud.web.exam3.dao.QuestionFolderDao;
@@ -23,6 +23,7 @@ import org.flycloud.web.exam3.model.QuestionLevel;
 import org.flycloud.web.exam3.model.QuestionType;
 import org.flycloud.web.exam3.model.Resource;
 import org.flycloud.web.exam3.model.ResourceType;
+import org.flycloud.web.exam3.model.format.IQuestionFormat;
 import org.flycloud.web.exam3.model.format.QuestionFormatFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,27 +60,25 @@ public class ImportServiceImpl implements ImportService {
 	public void importQuestion(MultipartFile file) throws Exception {
 		try {
 			Workbook book = Workbook.getWorkbook(file.getInputStream());
-			Sheet sheet = book.getSheet(0);
-			for (int row = 1; row < sheet.getRows(); row++) {
+			Sheet sheet1 = book.getSheet(0);
+			ExcelReader reader = new ExcelReader(sheet1);
+			
+			for (int row = 1; row < reader.getRows()-1; row++) {
+				Map<String,String> map = reader.getRow(row);
+				
 				Question q = new Question();
 				q.setId(UUID.randomUUID().toString());
-				QuestionBank bank = getQuestionBank(sheet.getCell(1, row)
-						.getContents());
-				q.setFolder(getQuestionFolder(bank, sheet.getCell(2, row)
-						.getContents()));// 章节
-				q.setType(getQuestionType(bank, sheet.getCell(3, row)
-						.getContents(), sheet.getCell(4, row).getContents()));// 题型
-
-				q.setLevel(QuestionLevel.getByName(sheet.getCell(5, row)
-						.getContents()));// 难易度
-
-				Map<String, String> properties = q.getProperties();
-				properties.clear();
-				properties.put("题干", sheet.getCell(6, row).getContents());
-				properties.put("选项", sheet.getCell(7, row).getContents());
-				properties.put("答案", sheet.getCell(8, row).getContents());
-				q.setProperties(properties);
-
+				map.remove("序号");
+				QuestionBank bank = getQuestionBank(map.remove("题库"));
+				q.setFolder(getQuestionFolder(bank, map.remove("章节")));
+				q.setType(getQuestionType(bank, map.remove("题型"), map.get("格式")));
+				q.setLevel(QuestionLevel.getByName(map.remove("难易")));
+				IQuestionFormat iqf = formatFactory.fromName(map.get("格式"));
+				if (iqf == null) {
+					throw new Exception(map.get("格式")+":不是合法的试题格式名称！");
+				}
+				map.remove("格式");
+				iqf.setProperties(q, map);
 				questionDao.save(q);
 			}
 			book.close();
@@ -129,13 +128,6 @@ public class ImportServiceImpl implements ImportService {
 		return bank;
 	}
 
-	public static void main(String[] args) {
-		String name = "fkjsad/fsdfjls/fsdfsd";
-		if (name.matches("^.+\\/[^\\/]*$")) {
-			System.out.println(name.replaceFirst("/[^\\/]+$", ""));
-		}
-	}
-
 	private QuestionFolder getQuestionFolder(QuestionBank bank, String name) {
 		QuestionFolder p = null;
 		if (name.matches("^.+\\/[^\\/]*$")) {
@@ -157,9 +149,5 @@ public class ImportServiceImpl implements ImportService {
 			f = questionFolderDao.save(f);
 		}
 		return f;
-	}
-
-	private Double getDifficult(String name) {
-		return Double.valueOf(name);
 	}
 }

@@ -1,10 +1,11 @@
 package org.flycloud.web.exam3.model.format;
 
-public class MultipleChoiceFormat implements IQuestionFormat {
+import org.flycloud.web.exam3.model.Question;
+
+public class MultipleChoiceFormat extends ChoiceFormat {
 
 	@Override
-	public boolean autoRating() {
-		return true;
+	public void validate(Question q) {
 	}
 
 }
